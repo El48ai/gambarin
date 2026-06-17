@@ -295,6 +295,106 @@
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+    /* ---------- Status bar ---------- */
+    .statusbar {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 13px; padding: 9px 9px 9px 14px; margin-bottom: 16px;
+    }
+    .status-info { display: flex; align-items: center; gap: 9px; font-size: 13.5px; font-weight: 600; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+    .statusbar.pro .status-dot { background: #34d399; box-shadow: 0 0 8px #34d399; }
+    .statusbar.pro #statusText { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .status-btn {
+      font-family: inherit; font-size: 13px; font-weight: 600; color: #fff; cursor: pointer;
+      border: none; border-radius: 9px; padding: 8px 13px; background: var(--grad);
+      box-shadow: 0 4px 14px rgba(99,102,241,0.35); transition: filter 0.18s, transform 0.1s; white-space: nowrap;
+    }
+    .status-btn:hover { filter: brightness(1.06); }
+    .status-btn:active { transform: scale(0.97); }
+    .statusbar.pro .status-btn { background: var(--surface-2); color: var(--muted); box-shadow: none; border: 1px solid var(--border); }
+
+    /* ---------- Lock overlay (panel edit) ---------- */
+    .lock-overlay {
+      position: absolute; inset: 0; z-index: 6; border-radius: var(--radius);
+      background: rgba(10,10,15,0.82); backdrop-filter: blur(6px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 30px 24px; gap: 9px;
+    }
+    .lock-overlay .lock-ico { font-size: 34px; }
+    .lock-overlay strong { font-family: "Space Grotesk", sans-serif; font-size: 18px; }
+    .lock-overlay p { font-size: 13.5px; color: var(--muted); max-width: 280px; }
+    .lock-cta { margin-top: 8px; width: auto; padding: 13px 22px; }
+
+    /* ---------- Modal ---------- */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 200; background: rgba(5,5,9,0.7);
+      backdrop-filter: blur(6px); display: flex; align-items: flex-end; justify-content: center;
+      padding: 0; opacity: 1; transition: opacity 0.2s;
+    }
+    .modal-overlay.hidden { display: none; }
+    .modal {
+      width: 100%; max-width: 480px; max-height: 92vh; overflow-y: auto;
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 22px 22px 0 0; padding: 26px 20px calc(26px + env(safe-area-inset-bottom));
+      position: relative; animation: slideUp 0.32s cubic-bezier(0.2,0.8,0.2,1);
+    }
+    @media (min-width: 540px) { .modal-overlay { align-items: center; } .modal { border-radius: 22px; } }
+    @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px; width: 34px; height: 34px; border: none;
+      border-radius: 50%; background: var(--surface-2); color: var(--text); cursor: pointer;
+      display: grid; place-items: center; transition: background 0.18s;
+    }
+    .modal-close:hover { background: var(--surface); }
+    .modal-close svg { width: 17px; height: 17px; }
+    .modal-title { font-family: "Space Grotesk", sans-serif; font-size: 21px; font-weight: 700; }
+    .modal-sub { font-size: 13.5px; color: var(--muted); margin: 4px 0 20px; }
+
+    .code-row { display: flex; gap: 8px; }
+    .code-row input {
+      flex: 1; font-family: inherit; font-size: 15px; color: var(--text); letter-spacing: 0.04em;
+      background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm);
+      padding: 13px 14px; outline: none; text-transform: uppercase; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .code-row input:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(139,92,246,0.18); }
+    .code-row input::placeholder { color: #5d6172; text-transform: none; letter-spacing: 0; }
+    .code-btn {
+      font-family: "Space Grotesk", sans-serif; font-size: 14px; font-weight: 600; color: #fff; cursor: pointer;
+      border: none; border-radius: var(--radius-sm); padding: 0 18px; background: var(--grad);
+      box-shadow: 0 4px 14px rgba(99,102,241,0.35); transition: filter 0.18s;
+    }
+    .code-btn:hover { filter: brightness(1.06); }
+    .code-btn:disabled { filter: grayscale(0.4) brightness(0.8); cursor: not-allowed; }
+    .code-msg { font-size: 13px; margin-top: 9px; min-height: 18px; }
+    .code-msg.ok { color: #34d399; } .code-msg.err { color: var(--danger); }
+
+    .modal-divider { display: flex; align-items: center; gap: 12px; margin: 22px 0 16px; color: var(--muted); font-size: 12px; }
+    .modal-divider::before, .modal-divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+    .price-list { display: flex; flex-direction: column; gap: 9px; margin-bottom: 20px; }
+    .price-item {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 13px 15px;
+    }
+    .price-item.popular { border-color: var(--violet); background: rgba(139,92,246,0.08); }
+    .price-name b { font-size: 14.5px; }
+    .price-name span { display: block; font-size: 12px; color: var(--muted); margin-top: 1px; }
+    .price-tag { font-family: "Space Grotesk", sans-serif; font-size: 16px; font-weight: 700; }
+
+    .pay-step { font-size: 13.5px; color: var(--text); margin: 14px 0 8px; }
+    .pay-step b { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .qr-box { display: flex; justify-content: center; background: #fff; border-radius: var(--radius-sm); padding: 12px; }
+    .qr-box img { width: 200px; height: 200px; object-fit: contain; display: block; }
+    .qr-missing { color: #999; font-size: 12.5px; padding: 80px 10px; text-align: center; }
+    .wa-btn {
+      display: flex; align-items: center; justify-content: center; gap: 9px; margin-top: 14px;
+      font-family: "Space Grotesk", sans-serif; font-size: 15px; font-weight: 600; color: #fff; text-decoration: none;
+      border-radius: var(--radius-sm); padding: 14px; background: #25d366; box-shadow: 0 8px 24px rgba(37,211,102,0.35); transition: filter 0.18s;
+    }
+    .wa-btn:hover { filter: brightness(1.05); }
+    .wa-btn svg { width: 21px; height: 21px; }
+
     @media (prefers-reduced-motion: reduce) {
       .aurora::before { animation: none; }
       * { animation-duration: 0.01ms !important; }
@@ -314,6 +414,15 @@
         <p>Buat & edit gambar dengan AI</p>
       </div>
     </header>
+
+    <!-- Status bar: mode gratis / Pro + sisa kuota -->
+    <div class="statusbar" id="statusbar">
+      <div class="status-info">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">Mode Gratis</span>
+      </div>
+      <button class="status-btn" id="statusBtn">✨ Upgrade Pro</button>
+    </div>
 
     <!-- Tabs -->
     <div class="tabs" id="tabs">
@@ -336,9 +445,9 @@
 
       <label class="field-label">Model AI</label>
       <select id="genModel">
-        <option value="black-forest-labs/flux-1.1-pro">Flux 1.1 Pro — kualitas terbaik</option>
-        <option value="black-forest-labs/flux-dev">Flux Dev — seimbang</option>
-        <option value="black-forest-labs/flux-schnell">Flux Schnell — cepat & hemat</option>
+        <option value="black-forest-labs/flux-schnell">Flux Schnell — cepat & gratis</option>
+        <option value="black-forest-labs/flux-1.1-pro">🔒 Flux 1.1 Pro — kualitas terbaik (Pro)</option>
+        <option value="black-forest-labs/flux-dev">🔒 Flux Dev — seimbang (Pro)</option>
       </select>
 
       <label class="field-label">Rasio</label>
@@ -366,6 +475,12 @@
 
     <!-- PANEL: EDIT -->
     <section class="panel hidden" id="panel-edit">
+      <div class="lock-overlay hidden" id="editLock">
+        <div class="lock-ico">🔒</div>
+        <strong>Fitur Pro</strong>
+        <p>Edit gambar khusus pengguna Pro. Masukkan kode atau beli untuk membuka.</p>
+        <button class="cta lock-cta" id="editUnlockBtn">✨ Buka dengan Kode Pro</button>
+      </div>
       <label class="field-label">Gambar yang mau diedit</label>
       <div class="dropzone" id="dropzone">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
@@ -387,7 +502,6 @@
       <label class="field-label">Model AI</label>
       <select id="editModel">
         <option value="black-forest-labs/flux-kontext-pro">Flux Kontext Pro — terbaik</option>
-        <option value="black-forest-labs/flux-kontext-max">Flux Kontext Max — paling tajam</option>
       </select>
 
       <button class="cta" id="editBtn">
@@ -406,6 +520,40 @@
     </section>
 
     <footer>Dibuat dengan <b>EL48</b> · Ditenagai Replicate AI</footer>
+  </div>
+
+  <!-- Modal Upgrade Pro -->
+  <div class="modal-overlay hidden" id="proModal">
+    <div class="modal">
+      <button class="modal-close" id="modalClose" aria-label="Tutup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <h2 class="modal-title">✨ Upgrade ke Pro</h2>
+      <p class="modal-sub">Buka Flux Pro + Edit Gambar, tanpa batas harian.</p>
+
+      <label class="field-label">Punya kode? Masukkan di sini</label>
+      <div class="code-row">
+        <input id="codeInput" type="text" placeholder="Contoh: PRO-XXXXX" autocomplete="off" spellcheck="false" />
+        <button class="code-btn" id="activateBtn">Aktifkan</button>
+      </div>
+      <div class="code-msg" id="codeMsg"></div>
+
+      <div class="modal-divider"><span>Belum punya kode? Beli dulu</span></div>
+
+      <div class="price-list">
+        <div class="price-item"><div class="price-name"><b>Mini</b><span>20 gambar</span></div><div class="price-tag">Rp 30.000</div></div>
+        <div class="price-item popular"><div class="price-name"><b>Populer ⭐</b><span>50 gambar</span></div><div class="price-tag">Rp 65.000</div></div>
+        <div class="price-item"><div class="price-name"><b>Hemat</b><span>100 gambar</span></div><div class="price-tag">Rp 120.000</div></div>
+      </div>
+
+      <p class="pay-step"><b>1.</b> Scan QR GoPay & bayar sesuai paket</p>
+      <div class="qr-box"><img src="/qr-gopay.jpg" alt="QR GoPay" onerror="this.parentNode.innerHTML='<span class=qr-missing>Unggah file qr-gopay.jpg ke project</span>'" /></div>
+      <p class="pay-step"><b>2.</b> Konfirmasi via WhatsApp, kode dikirim ke kamu</p>
+      <a class="wa-btn" id="waBtn" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.7.7-2.8-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1-.7-.3-1.4-.7-2-1.5-.2-.2 0-.4.1-.5l.4-.5.1-.4-.8-1.9c-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.7.7-.9 1.6-.6 2.6.3 1 1 2 1.8 2.8 1.5 1.4 3 1.8 3.6 2 .5.1 1 .1 1.4 0 .5-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1z"/></svg>
+        Konfirmasi via WhatsApp
+      </a>
+    </div>
   </div>
 
   <div class="toast" id="toast"></div>
@@ -440,6 +588,18 @@
     let selectedAspect = "1:1";
     let uploadedImage = null; // data URI hasil kompres
     let loaderTimer = null;
+
+    // ---------- Sistem Pro / kode / kuota ----------
+    const WA_NUMBER = "6285658379941";              // nomor WhatsApp (format internasional)
+    const FREE_LIMIT = 2;                            // jatah gratis per perangkat
+    const FREE_MODEL = "black-forest-labs/flux-schnell";
+    const FREE_USED_KEY = "el48_free_used";
+    const CODE_KEY = "el48_pro_code";
+    const QUOTA_KEY = "el48_pro_quota";
+
+    let activeCode = localStorage.getItem(CODE_KEY) || null;
+    let codeQuota = parseInt(localStorage.getItem(QUOTA_KEY), 10);
+    if (Number.isNaN(codeQuota)) codeQuota = null;
 
     const $ = (id) => document.getElementById(id);
 
@@ -534,8 +694,12 @@
         body: JSON.stringify(payload),
       });
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || "Gagal membuat gambar.");
-      return data.imageUrl;
+      if (!res.ok) {
+        const err = new Error(data.error || "Gagal membuat gambar.");
+        err.status = res.status;
+        throw err;
+      }
+      return data;
     }
 
     // ---------- Loader ----------
@@ -634,30 +798,108 @@
       window.addEventListener("touchend", end);
     }
 
+    // ---------- Sistem Pro: status, kode, kuota ----------
+    function isPro() { return Boolean(activeCode) && Number(codeQuota) > 0; }
+    function getFreeUsed() { return parseInt(localStorage.getItem(FREE_USED_KEY), 10) || 0; }
+    function setFreeUsed(n) { localStorage.setItem(FREE_USED_KEY, String(n)); }
+
+    function renderStatus() {
+      const bar = $("statusbar");
+      if (isPro()) {
+        bar.classList.add("pro");
+        $("statusText").textContent = "PRO · sisa " + codeQuota + " gambar";
+        $("statusBtn").textContent = "Kelola";
+      } else {
+        bar.classList.remove("pro");
+        const left = Math.max(0, FREE_LIMIT - getFreeUsed());
+        $("statusText").textContent = "Mode Gratis · sisa " + left + "/" + FREE_LIMIT;
+        $("statusBtn").textContent = "✨ Upgrade Pro";
+      }
+    }
+
+    function applyProState() {
+      const pro = isPro();
+      $("editLock").classList.toggle("hidden", pro); // buka/kunci panel edit
+      if (!pro && $("genModel").value !== FREE_MODEL) $("genModel").value = FREE_MODEL;
+      renderStatus();
+    }
+
+    function openModal() {
+      $("codeMsg").textContent = ""; $("codeMsg").className = "code-msg";
+      $("codeInput").value = activeCode || "";
+      $("proModal").classList.remove("hidden");
+    }
+    function closeModal() { $("proModal").classList.add("hidden"); }
+
+    async function activateCode() {
+      const code = $("codeInput").value.trim().toUpperCase();
+      const msg = $("codeMsg");
+      if (!code) { msg.textContent = "Masukkan kode dulu."; msg.className = "code-msg err"; return; }
+      const btn = $("activateBtn"); btn.disabled = true; btn.textContent = "Cek...";
+      try {
+        const data = await callAPI({ action: "check", code });
+        activeCode = code; codeQuota = Number(data.quotaRemaining);
+        localStorage.setItem(CODE_KEY, code);
+        localStorage.setItem(QUOTA_KEY, String(codeQuota));
+        msg.textContent = "✓ Kode aktif! Sisa " + codeQuota + " gambar.";
+        msg.className = "code-msg ok";
+        applyProState();
+        setTimeout(closeModal, 1200);
+      } catch (err) {
+        msg.textContent = err.message; msg.className = "code-msg err";
+      } finally {
+        btn.disabled = false; btn.textContent = "Aktifkan";
+      }
+    }
+
+    function deactivateCode() {
+      activeCode = null; codeQuota = null;
+      localStorage.removeItem(CODE_KEY); localStorage.removeItem(QUOTA_KEY);
+      applyProState();
+    }
+
+    function afterSuccess(data) {
+      if (Boolean(activeCode) && data.quotaRemaining !== null && data.quotaRemaining !== undefined) {
+        codeQuota = Number(data.quotaRemaining);
+        localStorage.setItem(QUOTA_KEY, String(codeQuota));
+        if (codeQuota <= 0) { toast("Kuota Pro habis. Beli lagi untuk lanjut."); deactivateCode(); }
+        else renderStatus();
+      } else {
+        setFreeUsed(getFreeUsed() + 1);
+        renderStatus();
+      }
+    }
+
     // ---------- Jalankan ----------
     async function runGenerate() {
       const prompt = $("genPrompt").value.trim();
       if (!prompt) { toast("Tulis deskripsi gambar dulu."); $("genPrompt").focus(); return; }
+      const model = $("genModel").value;
+
+      if (model !== FREE_MODEL && !isPro()) { toast("Model ini khusus Pro."); $("genModel").value = FREE_MODEL; openModal(); return; }
+      if (!isPro() && getFreeUsed() >= FREE_LIMIT) { toast("Jatah gratis habis. Upgrade ke Pro untuk lanjut."); openModal(); return; }
+
       const btn = $("genBtn"); btn.disabled = true;
       showLoader();
       try {
-        const url = await callAPI({
-          mode: "generate",
-          prompt,
-          model: $("genModel").value,
-          aspect_ratio: selectedAspect,
-          seed: $("genSeed").value,
+        const data = await callAPI({
+          mode: "generate", prompt, model,
+          aspect_ratio: selectedAspect, seed: $("genSeed").value,
+          code: activeCode || undefined,
         });
-        showGenerateResult(url, prompt);
-        addHistory({ mode: "generate", prompt, imageUrl: url });
+        showGenerateResult(data.imageUrl, prompt);
+        addHistory({ mode: "generate", prompt, imageUrl: data.imageUrl });
+        afterSuccess(data);
       } catch (err) {
-        showError(err.message);
+        if ([402, 403, 429].includes(err.status)) { stopLoader(); resultEl.classList.add("hidden"); toast(err.message); openModal(); }
+        else showError(err.message);
       } finally {
         btn.disabled = false;
       }
     }
 
     async function runEdit() {
+      if (!isPro()) { openModal(); return; }
       const prompt = $("editPrompt").value.trim();
       if (!uploadedImage) { toast("Unggah gambar dulu."); return; }
       if (!prompt) { toast("Tulis perintah perubahan dulu."); $("editPrompt").focus(); return; }
@@ -665,23 +907,35 @@
       const original = uploadedImage;
       showLoader();
       try {
-        const url = await callAPI({
-          mode: "edit",
-          prompt,
-          model: $("editModel").value,
-          input_image: original,
+        const data = await callAPI({
+          mode: "edit", prompt, model: $("editModel").value,
+          input_image: original, code: activeCode || undefined,
         });
-        showEditResult(url, original, prompt);
-        addHistory({ mode: "edit", prompt, imageUrl: url });
+        showEditResult(data.imageUrl, original, prompt);
+        addHistory({ mode: "edit", prompt, imageUrl: data.imageUrl });
+        afterSuccess(data);
       } catch (err) {
-        showError(err.message);
+        if ([402, 403, 429].includes(err.status)) { stopLoader(); resultEl.classList.add("hidden"); toast(err.message); openModal(); }
+        else showError(err.message);
       } finally {
         btn.disabled = false;
       }
     }
 
+    // ---------- Wiring tombol ----------
     $("genBtn").addEventListener("click", runGenerate);
     $("editBtn").addEventListener("click", runEdit);
+    $("statusBtn").addEventListener("click", openModal);
+    $("editUnlockBtn").addEventListener("click", openModal);
+    $("modalClose").addEventListener("click", closeModal);
+    $("proModal").addEventListener("click", (e) => { if (e.target.id === "proModal") closeModal(); });
+    $("activateBtn").addEventListener("click", activateCode);
+    $("codeInput").addEventListener("keydown", (e) => { if (e.key === "Enter") activateCode(); });
+    $("genModel").addEventListener("change", () => {
+      if ($("genModel").value !== FREE_MODEL && !isPro()) { $("genModel").value = FREE_MODEL; toast("Model Pro butuh kode."); openModal(); }
+    });
+    $("waBtn").href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent("Halo, saya mau beli kode Gambarin. Paket: ");
+    applyProState();
 
     // ---------- Riwayat ----------
     function getHistory() {
