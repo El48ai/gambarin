@@ -66,4 +66,4 @@ Buka URL Vercel-mu. Di HP, ketuk menu browser → **Tambahkan ke layar utama** s
 Edit pilihan model langsung di `index.html` (cari `<select id="genModel">` dan `id="editModel">`).
 Daftar model & harga ada di **replicate.com/black-forest-labs**.
 
-Dibuat dengan ❤️ oleh EL48.
+Dibuat oleh ELPADRI
