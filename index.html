@@ -274,8 +274,16 @@
 
     /* ---------- History ---------- */
     .history { margin-top: 34px; }
-    .history h3 { font-family: "Space Grotesk", sans-serif; font-size: 15px; font-weight: 600; margin: 0 0 13px 2px; display: flex; align-items: center; gap: 8px; }
+    .history-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px; }
+    .history h3 { font-family: "Space Grotesk", sans-serif; font-size: 15px; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 8px; }
     .history h3 svg { width: 16px; height: 16px; color: var(--muted); }
+    .history-clear {
+      font-family: inherit; font-size: 12.5px; font-weight: 600; color: var(--muted); cursor: pointer;
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: 9px;
+      padding: 7px 11px; display: flex; align-items: center; gap: 5px; transition: all 0.18s;
+    }
+    .history-clear:hover { color: var(--danger); border-color: rgba(248,113,113,0.4); background: rgba(248,113,113,0.08); }
+    .history-clear svg { width: 13px; height: 13px; }
     .history-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
     .hist-item { aspect-ratio: 1; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); cursor: pointer; position: relative; transition: transform 0.18s, border-color 0.18s; }
     .hist-item:hover { transform: translateY(-2px); border-color: var(--border-strong); }
@@ -515,11 +523,17 @@
 
     <!-- HISTORY -->
     <section class="history">
-      <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg> Riwayat</h3>
+      <div class="history-head">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg> Riwayat</h3>
+        <button class="history-clear" id="historyClearBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+          Hapus
+        </button>
+      </div>
       <div class="history-grid" id="historyGrid"></div>
     </section>
 
-    <footer>Dibuat TJ <b>ELPADRI</b> · Ditenagai Replicate AI</footer>
+    <footer>Dibuat dengan <b>EL48</b> · Ditenagai Replicate AI</footer>
   </div>
 
   <!-- Modal Upgrade Pro -->
@@ -967,6 +981,29 @@
         grid.appendChild(d);
       });
     }
+    function clearHistory() {
+      const btn = $("historyClearBtn");
+      if (!btn.dataset.confirm) {
+        btn.dataset.confirm = "1";
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Yakin?';
+        btn.style.color = "var(--danger)"; btn.style.borderColor = "rgba(248,113,113,0.4)";
+        setTimeout(() => {
+          if (btn.dataset.confirm) {
+            delete btn.dataset.confirm;
+            btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Hapus';
+            btn.style.color = ""; btn.style.borderColor = "";
+          }
+        }, 3000);
+        return;
+      }
+      delete btn.dataset.confirm;
+      try { localStorage.removeItem(HISTORY_KEY); } catch {}
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Hapus';
+      btn.style.color = ""; btn.style.borderColor = "";
+      renderHistory();
+      toast("Riwayat dihapus.");
+    }
+    $("historyClearBtn").addEventListener("click", clearHistory);
     renderHistory();
 
     // ---------- Utilitas ----------
