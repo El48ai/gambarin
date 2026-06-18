@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#060609" />
-  <title>EL48 AI Image Studio — Creative AI Power</title>
+  <title>EL48 AI Studio — Creative AI Power</title>
   <link rel="manifest" href="/manifest.json" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -223,44 +223,31 @@
     .icon-btn:active { transform: translateY(1px); }
     .icon-btn svg { width: 20px; height: 20px; }
 
-    /* ---------- CTA Button: Animated Gradient ---------- */
+    /* ---------- Primary button ---------- */
     .cta {
       width: 100%; margin-top: 25px; font-family: var(--font-head);
-      font-size: 16px; font-weight: 700; color: #fff; cursor: pointer;
+      font-size: 16px; font-weight: 600; color: #fff; cursor: pointer;
       border: none; border-radius: var(--radius-md); padding: 16px;
-      background: linear-gradient(135deg, #8b5cf6, #6366f1, #22d3ee, #8b5cf6);
-      background-size: 300% 100%;
+      background: var(--grad); background-size: 160% 160%;
       display: flex; align-items: center; justify-content: center; gap: 10px;
-      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3), inset 0 1px 0 rgba(255,255,255,0.15);
-      transition: all 0.3s var(--ease);
-      position: relative; overflow: hidden;
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4); transition: transform 0.12s, box-shadow 0.25s, filter 0.2s;
     }
-    .cta:hover { 
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
-      background-position: 100% 0;
-      transform: translateY(-1px);
-    }
-    .cta:active { transform: translateY(1px); box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3); }
-    
-    .cta:disabled { 
-      background: #3a3a4f; color: #7a7a95; cursor: not-allowed; 
-      box-shadow: none; transform: none; opacity: 0.8;
-    }
-    .cta svg { width: 20px; height: 20px; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2)); }
+    .cta:hover { box-shadow: 0 12px 38px rgba(99,102,241,0.55); filter: brightness(1.05); }
+    .cta:active { transform: translateY(1px) scale(0.995); }
+    .cta:disabled { filter: grayscale(0.4) brightness(0.8); cursor: not-allowed; box-shadow: none; }
+    .cta svg { width: 20px; height: 20px; }
 
-    /* ---------- Dropzone: Cleaner ---------- */
+    /* ---------- Dropzone ---------- */
     .dropzone {
-      border: 2px dashed var(--border-strong); border-radius: var(--radius-md);
-      background: rgba(0,0,0,0.15); padding: 35px 20px; text-align: center; cursor: pointer;
-      transition: all 0.25s var(--ease); display: flex; flex-direction: column; align-items: center; gap: 12px;
-      color: var(--text-muted);
+      border: 1.5px dashed var(--border-strong); border-radius: var(--radius-md);
+      background: var(--bg-input); padding: 35px 20px; text-align: center; cursor: pointer;
+      transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 12px;
     }
-    .dropzone:hover, .dropzone.drag { border-color: var(--indigo); background: rgba(99, 102, 241, 0.04); color: var(--text); }
-    .dropzone.drag svg { transform: translateY(-5px); } /* Mikro interaksi */
-
-    .dropzone svg { width: 36px; height: 36px; color: var(--indigo); transition: transform 0.2s var(--ease); }
+    .dropzone:hover, .dropzone.drag { border-color: var(--indigo); background: rgba(99, 102, 241, 0.06); }
+    .dropzone svg { width: 36px; height: 36px; color: var(--indigo); transition: transform 0.2s; }
+    .dropzone.drag svg { transform: translateY(-3px); }
     .dropzone strong { font-size: 15px; font-weight: 600; color: var(--text); }
-    .dropzone span { font-size: 13px; font-weight: 400; }
+    .dropzone span { font-size: 13px; color: var(--text-muted); }
 
     .preview-box { position: relative; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-strong); box-shadow: var(--shadow-md); animation: reveal 0.3s var(--ease); }
     .preview-box img { width: 100%; display: block; max-height: 350px; object-fit: contain; background: #010103; }
@@ -272,8 +259,9 @@
     }
     .preview-remove:hover { background: var(--danger); transform: scale(1.1) rotate(90deg); }
     .preview-remove svg { width: 18px; height: 18px; stroke-width: 2.5; }
+    .hidden { display: none !important; }
 
-    /* ---------- Result Area ---------- */
+    /* ---------- Result ---------- */
     .result { margin-top: 22px; animation: slideUpPanel 0.4s var(--ease); }
     .result-card {
       background: var(--bg-panel); border: 1px solid var(--border); border-radius: var(--radius-lg);
@@ -295,7 +283,6 @@
         content: ''; position: absolute; inset: 0; border-radius: 50%;
         background: inherit; filter: blur(10px); opacity: 0.6;
     }
-
     @keyframes spin { to { transform: rotate(360deg); } }
     .loader-text { font-size: 14px; color: var(--text-muted); text-align: center; max-width: 250px; font-weight: 500; }
     .loader-text b { color: var(--text); font-weight: 600; background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -325,7 +312,7 @@
     .tool.primary:hover { box-shadow: 0 6px 16px rgba(99, 102, 241, 0.45); }
     .tool.primary svg { color: #fff; opacity: 0.9; }
 
-    /* Before/After Slider: Polished */
+    /* Before/After comparison slider */
     .compare { position: relative; border-radius: var(--radius-md); overflow: hidden; user-select: none; touch-action: none; box-shadow: var(--shadow-md); border: 1px solid var(--border); animation: revealImg 0.5s var(--ease); }
     .compare img { display: block; width: 100%; pointer-events: none; }
     .compare .after { position: absolute; inset: 0; height: 100%; object-fit: cover; }
@@ -372,7 +359,7 @@
     footer { text-align: center; margin-top: 50px; font-size: 12.5px; color: #52566b; font-weight: 500; border-top: 1px solid var(--border); padding-top: 20px; }
     footer b { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-family: var(--font-head); font-weight: 700; }
 
-    /* ---------- Toast: Slicker ---------- */
+    /* ---------- Toast ---------- */
     .toast {
       position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(20px);
       background: rgba(20, 20, 31, 0.9); border: 1px solid var(--border-strong); color: #fff;
@@ -382,9 +369,8 @@
       backdrop-filter: blur(10px); display: flex; align-items: center; gap: 8px;
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-    /* Icon for toast via JS */
 
-    /* ---------- Status Bar: Clean ---------- */
+    /* ---------- Status bar ---------- */
     .statusbar {
       display: flex; align-items: center; justify-content: space-between;
       background: var(--bg-panel); border: 1px solid var(--border);
@@ -395,10 +381,9 @@
     .status-dot { width: 9px; height: 9px; border-radius: 50%; background: #52566b; flex-shrink: 0; position: relative; }
     
     .statusbar.pro .status-dot { background: var(--pro); box-shadow: 0 0 10px var(--pro); animation: pulsePro 2s infinite; }
-    @keyframes pulsePro { 0% { box-shadow: 0 0 0 0px rgba(52, 211, 153, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); } 100% { box-shadow: 0 0 0 0px rgba(52, 211, 153, 0); } }
+    @keyframes pulsePro { 0% { box-shadow: 0 0 0 0px rgba(52, 211, 153, 0.4)))); } 70% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); } 100% { box-shadow: 0 0 0 0px rgba(52, 211, 153, 0); } }
 
     .statusbar.pro #statusText { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
-    
     .status-btn {
       font-family: inherit; font-size: 13px; font-weight: 700; color: #fff; cursor: pointer;
       border: none; border-radius: 10px; padding: 9px 15px; background: var(--grad);
@@ -409,7 +394,7 @@
     .statusbar.pro .status-btn { background: var(--surface); color: var(--text-muted); box-shadow: none; border: 1px solid var(--border); }
     .statusbar.pro .status-btn:hover { background: var(--surface-hover); color: var(--text); border-color: var(--border-strong); }
 
-    /* ---------- Lock Overlay ---------- */
+    /* ---------- Lock overlay (panel edit) ---------- */
     .lock-overlay {
       position: absolute; inset: 0; z-index: 10; border-radius: var(--radius-lg);
       background: rgba(6, 6, 9, 0.85); backdrop-filter: blur(8px) saturate(150%);
@@ -423,7 +408,7 @@
     .lock-overlay p { font-size: 14px; color: var(--text-muted); max-width: 300px; font-weight: 500; line-height: 1.5; }
     .lock-cta { margin-top: 15px; width: auto; padding: 14px 25px; font-size: 15px; }
 
-    /* ---------- Modal Pro: Premium Look ---------- */
+    /* ---------- Modal ---------- */
     .modal-overlay {
       position: fixed; inset: 0; z-index: 200; background: rgba(1,1,3,0.75);
       backdrop-filter: blur(10px); display: flex; align-items: flex-end; justify-content: center;
@@ -431,7 +416,6 @@
     }
     .modal-overlay.hidden { opacity: 0; pointer-events: none; }
     .modal-overlay.hidden .modal { transform: translateY(50px); opacity: 0; }
-
     .modal {
       width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto;
       background: #0a0a12; border: 1px solid var(--border-strong);
@@ -441,9 +425,7 @@
       scrollbar-width: none; /* Hide scrollbar Firefox */
     }
     .modal::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
-
     @media (min-width: 540px) { .modal-overlay { align-items: center; padding: 20px; } .modal { border-radius: 26px; transform: translateY(0); } .modal-overlay.hidden .modal { transform: translateY(20px) scale(0.95); } }
-    
     .modal-close {
       position: absolute; top: 20px; right: 20px; width: 36px; height: 36px; border: none;
       border-radius: 50%; background: var(--surface); color: var(--text-muted); cursor: pointer;
@@ -451,12 +433,11 @@
     }
     .modal-close:hover { background: var(--surface-hover); color: var(--text); transform: rotate(90deg); }
     .modal-close svg { width: 18px; height: 18px; stroke-width: 2.5; }
-
     .modal-title { font-family: var(--font-head); font-size: 24px; font-weight: 700; letter-spacing: -0.02em; background: var(--grad-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .modal-sub { font-size: 14px; color: var(--text-muted); margin: 5px 0 25px; font-weight: 500; }
 
     .code-row { display: flex; gap: 10px; margin-bottom: 5px;}
-    .code-row input { flex: 1; letter-spacing: 0.1em; font-family: 'Courier New', monospace; font-weight: 700; text-transform: uppercase; background: rgba(0,0,0,0.2); border-color: var(--border-strong); }
+    .code-row input { flex: 1; letter-spacing: 0.1em; font-family: 'Courier New', monospace; font-weight: 700; text-transform: uppercase; background: rgba(0,0,0,0.2); border-color: var(--border-strong); color: #fff; }
     .code-row input::placeholder { letter-spacing: 0; font-family: var(--font-body); font-weight: 400; text-transform: none; }
     
     .code-btn {
@@ -492,7 +473,6 @@
         background: var(--grad); color: #fff; font-size: 10px; font-weight: 700;
         padding: 3px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.05em;
     }
-
     .price-name b { font-size: 16px; font-weight: 700; color: var(--text); }
     .price-name span { display: block; font-size: 13px; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
     .price-tag { font-family: var(--font-head); font-size: 18px; font-weight: 700; color: #fff; background: rgba(255,255,255,0.03); padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border); }
@@ -552,11 +532,11 @@
     <div class="tabs" id="tabs">
       <button class="active" data-tab="generate">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 5L19 9.5 13.5 11 12 16l-1.5-5L5 9.5 10.5 8z"/></svg>
-        Generate
+        BUAT GAMBAR
       </button>
       <button data-tab="edit">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
-        Smart Edit
+        EDIT GAMBAR
       </button>
       <span class="tab-indicator" id="tabInd"></span>
     </div>
@@ -837,7 +817,7 @@
       const img = new Image();
       const reader = new FileReader();
       reader.onload = (e) => (img.src = e.target.result);
-      reader.onerror = () => toast("❌ Gagal membaca file.");
+      reader.onerror = () => toast("Gagal membaca file.");
       
       img.onload = () => {
         const maxDim = 1500; // Increased max dim for better quality Pro edit
@@ -857,7 +837,7 @@
         dropzone.classList.add("hidden");
         toast("✅ Gambar siap diedit.");
       };
-      img.onerror = () => toast("❌ Format gambar tidak didukung.");
+      img.onerror = () => toast("Format gambar tidak didukung.");
       reader.readAsDataURL(file);
     }
 
@@ -905,7 +885,7 @@
         '<p>Oops! ' + escapeHtml(msg) + '</p><span class="sub">Coba ubah perintah, ganti model, atau ulangi beberapa saat lagi.</span></div></div>';
     }
 
-    // ---------- Tampilkan hasil GENERATE ----------
+    // ---------- Tampilkan hasil BUAT GAMBAR ----------
     function showGenerateResult(url, prompt) {
       stopLoader();
       resultEl.innerHTML =
@@ -1011,31 +991,37 @@
       }
     }
 
-    // --- PERBAIKAN V2: Dinamis hapus/tambah gembok ---
+    // --- Sinkronisasi Visual Fitur Pro ---
     function applyProState() {
-      const pro = isPro();
-      $("editLock").classList.toggle("hidden", pro); // buka/kunci panel edit
+      const pro = isPro(); // Cek status PRO (true/false)
 
+      // FIX 1: Membuka kunci Gembok di panel EDIT GAMBAR
+      // Jika PRO (true), class 'hidden' ditambahkan ke overlay gembok (gembok hilang)
+      $("editLock").classList.toggle("hidden", pro); 
+
+      // FIX 2: Menghapus ikon gembok 🔒 di dropdown BUAT GAMBAR
       const genModelSelect = $("genModel");
       const options = genModelSelect.options;
 
       for (let i = 0; i < options.length; i++) {
         let opt = options[i];
-        if (opt.value === FREE_MODEL) continue; // Skip model gratis
+        if (opt.value === FREE_MODEL) continue; // Model gratis tidak perlu diubah
 
         if (pro) {
-          // Jika Pro, hapus ikon kunci jika ada
+          // Jika PRO, hapus ikon kunci (🔒) dari teks model
           opt.textContent = opt.textContent.replace("🔒 ", "");
         } else {
-          // Jika tidak Pro, tambahkan ikon kunci jika belum ada
+          // Jika tidak PRO, tambahkan ikon kunci (🔒) jika belum ada
           if (!opt.textContent.startsWith("🔒 ")) {
             opt.textContent = "🔒 " + opt.textContent;
           }
         }
       }
 
+      // Pastikan model generate default adalah gratis jika tidak PRO
       if (!pro && $("genModel").value !== FREE_MODEL) $("genModel").value = FREE_MODEL;
-      renderStatus();
+      
+      renderStatus(); // Perbarui status bar
     }
 
     function openModal() {
@@ -1052,7 +1038,7 @@
     async function activateCode() {
       const code = $("codeInput").value.trim().toUpperCase();
       const msg = $("codeMsg");
-      if (!code) { msg.textContent = "⚠️ Masukkan kode activation dulu."; msg.className = "code-msg err"; return; }
+      if (!code) { msg.textContent = "⚠️ Masukkan kode aktivasi dulu."; msg.className = "code-msg err"; return; }
       
       const btn = $("activateBtn"); btn.disabled = true; btn.textContent = "Memverifikasi...";
       try {
@@ -1068,7 +1054,7 @@
         setTimeout(closeModal, 1500);
       } catch (err) {
         msg.textContent = "❌ " + err.message; msg.className = "code-msg err";
-        deactivateCode(); // Clean up if validation fails
+        deactivateCode(); // Hapus status jika verifikasi gagal
       } finally {
         btn.disabled = false; btn.textContent = "Aktifkan";
       }
@@ -1114,7 +1100,7 @@
           code: activeCode || undefined,
         });
         showGenerateResult(data.imageUrl, prompt);
-        addHistory({ mode: "generate", prompt, imageUrl: data.imageUrl, model, ar: selectedAspect });
+        addHistory({ mode: "generate", prompt, imageUrl: data.imageUrl });
         afterSuccess(data);
       } catch (err) {
         if ([402, 403, 429].includes(err.status)) { stopLoader(); resultEl.classList.add("hidden"); toast("⚠️ " + err.message); openModal(); }
@@ -1132,15 +1118,14 @@
       
       const btn = $("editBtn"); btn.disabled = true; btn.textContent = "Menerapkan Perubahan...";
       const original = uploadedImage;
-      const model = $("editModel").value;
       showLoader();
       try {
         const data = await callAPI({
-          mode: "edit", prompt, model,
+          mode: "edit", prompt, model: $("editModel").value,
           input_image: original, code: activeCode || undefined,
         });
         showEditResult(data.imageUrl, original, prompt);
-        addHistory({ mode: "edit", prompt, imageUrl: data.imageUrl, originalImage: original, model });
+        addHistory({ mode: "edit", prompt, imageUrl: data.imageUrl, originalImage: original });
         afterSuccess(data);
       } catch (err) {
         if ([402, 403, 429].includes(err.status)) { stopLoader(); resultEl.classList.add("hidden"); toast("⚠️ " + err.message); openModal(); }
@@ -1180,13 +1165,14 @@
     });
 
     function updateWaLink(plan) {
-        const text = encodeURIComponent(`Halo ELPADRI Studio, saya mau beli kode aktivasi EL48 AI. Paket: *${plan}*. Saya siap kirim bukti transfer.`);
+        const text = encodeURIComponent(`Halo EL48 Studio, saya mau beli kode aktivasi EL48 AI Studio. Paket: *${plan}*. Saya siap kirim bukti transfer.`);
         $("waBtn").href = "https://wa.me/" + WA_NUMBER + "?text=" + text;
     }
     
     // Set default WA link
     updateWaLink("Populer ⭐");
 
+    // Terapkan status Pro saat halaman dimuat
     applyProState();
 
     // ---------- Riwayat (History) ----------
@@ -1195,11 +1181,9 @@
     }
     function addHistory(item) {
       const h = getHistory();
-      // Avoid adding exact duplicates based on imageUrl
       if (h.some(existing => existing.imageUrl === item.imageUrl)) return;
-      
       h.unshift({ ...item, ts: Date.now() });
-      const trimmed = h.slice(0, 12); // Simpan 12 terakhir
+      const trimmed = h.slice(0, 12);
       try { localStorage.setItem(HISTORY_KEY, JSON.stringify(trimmed)); } catch {}
       renderHistory();
     }
@@ -1267,7 +1251,6 @@
         URL.revokeObjectURL(obj);
         setTimeout(() => toast("✅ Gambar tersimpan!"), 500);
       } catch (err) {
-        // Fallback for browsers that block direct blob download
         window.open(url, "_blank");
         toast("⚠️ Gagal unduh otomatis. Gambar dibuka di tab baru, silahkan simpan manual.");
       }
@@ -1275,7 +1258,6 @@
     
     function copyText(t) {
       if (!navigator.clipboard) {
-          // Fallback old school copy
           const textarea = document.createElement("textarea");
           textarea.value = t;
           textarea.style.position = "fixed";
@@ -1283,9 +1265,9 @@
           textarea.select();
           try {
               document.execCommand("copy");
-              toast("📋 Prompt disalin ke clipboard.");
+              toast("📋 Prompt disalin.");
           } catch (err) {
-              toast("❌ Gagal menyalin prompt.");
+              toast("❌ Gagal menyalin.");
           }
           document.body.removeChild(textarea);
           return;
@@ -1301,29 +1283,18 @@
     let toastTimer = null;
     function toast(msg) {
       const t = $("toast");
-      // Add icon based on message content
-      let icon = "";
-      if (msg.includes("✅") || msg.includes("✨") || msg.includes("🎉")) icon = ""; // icon already in text
-      else if (msg.includes("⚠️")) icon = "";
-      else if (msg.includes("❌")) icon = "";
-      else if (msg.includes("📋")) icon = "";
-      else if (msg.includes("📥")) icon = "";
-      else if (msg.includes("🔄")) icon = "";
-      
       t.innerHTML = msg;
       t.classList.add("show");
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => t.classList.remove("show"), 3000);
     }
 
-    // ---------- PWA & Service Worker ----------
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));
     }
     
-    // Add load fade-in for subtle entrance
     document.addEventListener('DOMContentLoaded', () => {
-        renderHistory(); // Ensure history rendered
+        renderHistory();
     });
   </script>
 </body>
