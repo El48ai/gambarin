@@ -111,6 +111,7 @@
       border-radius: var(--radius); padding: 18px;
       backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 24px 60px rgba(0,0,0,0.4);
+      position: relative; /* Penting untuk lock-overlay */
     }
     .panel.hidden { display: none; }
 
@@ -185,7 +186,7 @@
       border: none; border-radius: var(--radius-sm); padding: 15px;
       background: var(--grad); background-size: 160% 160%;
       display: flex; align-items: center; justify-content: center; gap: 9px;
-      box-shadow: 0 10px 30px rgba(99,102,241,0.4); transition: transform 0.12s, box-shadow 0.25s, filter 0.2s;
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4); transition: transform 0.12s, box-shadow 0.25s, filter 0.2s;
     }
     .cta:hover { box-shadow: 0 12px 38px rgba(99,102,241,0.55); filter: brightness(1.05); }
     .cta:active { transform: translateY(1px) scale(0.995); }
@@ -423,7 +424,6 @@
       </div>
     </header>
 
-    <!-- Status bar: mode gratis / Pro + sisa kuota -->
     <div class="statusbar" id="statusbar">
       <div class="status-info">
         <span class="status-dot" id="statusDot"></span>
@@ -432,7 +432,6 @@
       <button class="status-btn" id="statusBtn">✨ Upgrade Pro</button>
     </div>
 
-    <!-- Tabs -->
     <div class="tabs" id="tabs">
       <button class="active" data-tab="generate">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 5L19 9.5 13.5 11 12 16l-1.5-5L5 9.5 10.5 8z"/></svg>
@@ -445,7 +444,6 @@
       <span class="tab-indicator" id="tabInd"></span>
     </div>
 
-    <!-- PANEL: GENERATE -->
     <section class="panel" id="panel-generate">
       <label class="field-label">Deskripsi gambar</label>
       <textarea id="genPrompt" placeholder="Contoh: kucing astronot melayang di luar angkasa, sinematik, detail tinggi..."></textarea>
@@ -481,7 +479,6 @@
       </button>
     </section>
 
-    <!-- PANEL: EDIT -->
     <section class="panel hidden" id="panel-edit">
       <div class="lock-overlay hidden" id="editLock">
         <div class="lock-ico">🔒</div>
@@ -518,10 +515,8 @@
       </button>
     </section>
 
-    <!-- RESULT -->
     <section class="result hidden" id="result"></section>
 
-    <!-- HISTORY -->
     <section class="history">
       <div class="history-head">
         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg> Riwayat</h3>
@@ -536,7 +531,6 @@
     <footer>Dibuat Oleh <b>ELPADRI</b> · Ditenagai Replicate AI</footer>
   </div>
 
-  <!-- Modal Upgrade Pro -->
   <div class="modal-overlay hidden" id="proModal">
     <div class="modal">
       <button class="modal-close" id="modalClose" aria-label="Tutup">
@@ -834,6 +828,28 @@
     function applyProState() {
       const pro = isPro();
       $("editLock").classList.toggle("hidden", pro); // buka/kunci panel edit
+
+      // --- PERBAIKAN: Update visual kunci pada dropdown Model AI ---
+      const genModelSelect = $("genModel");
+      const options = genModelSelect.options;
+
+      for (let i = 0; i < options.length; i++) {
+        let opt = options[i];
+        // Skip model gratis
+        if (opt.value === FREE_MODEL) continue;
+
+        if (pro) {
+          // Jika Pro, hapus ikon kunci jika ada
+          opt.textContent = opt.textContent.replace("🔒 ", "");
+        } else {
+          // Jika tidak Pro, tambahkan ikon kunci jika belum ada
+          if (!opt.textContent.startsWith("🔒 ")) {
+            opt.textContent = "🔒 " + opt.textContent;
+          }
+        }
+      }
+      // -------------------------------------------------------------
+
       if (!pro && $("genModel").value !== FREE_MODEL) $("genModel").value = FREE_MODEL;
       renderStatus();
     }
